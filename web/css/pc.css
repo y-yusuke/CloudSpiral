@@ -1,0 +1,26 @@
+.map_box {
+	padding-top: 60px;
+	position: static;
+	overflow: visible;
+	float: left;
+}
+
+.sv_box {
+	padding-top: 60px;
+	position: static;
+	overflow: visible;
+	float: right;
+}
+
+.street_img {
+	zoom: 110%;
+	width : 95%;
+}
+
+.direct {
+	display: block;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width: 70px;
+	height: 70px;
+}

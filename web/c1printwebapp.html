@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>c1webapp_printpage</title>
+		<link rel="stylesheet" href="css/bootstrap-responsive.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<!-- <link rel="stylesheet" href="css/default.css"> -->
+	</head>
+
+	<!--	<body style="padding-top:60px;"> -->
+	<body>
+		<div id="map_now" class='map_box'></div>
+		<div id="print_map" class='sv_box' style="overflow:auto;"></div>
+
+		<input id='address_from'  type='hidden'  value="" class="form-control" placeholder="Origin">
+		<input id='address_to'  type='hidden'  value="" class="form-control" placeholder="Destination">
+		<input type="hidden" name="radio2" id="drive" value="radio1" checked="true">
+		<input type="hidden" name="radio" id="move_off" value="radio4"  checked="true">
+
+		<script src="https://maps.google.com/maps/api/js?v=3&sensor=false"></script>
+		<script src="js/jquery-2.1.4.js"></script>
+		<script src="js/c1printwebapp.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script type="text/javascript">
+			var agent = navigator.userAgent;
+			var client;
+
+			// iPhone と Android は別cssで
+			if ((agent.search("iPhone") != -1 && navigator.userAgent.indexOf('iPad') == -1) || (agent.search("Android") != -1 && navigator.userAgent.indexOf('Nexus7') == -1 && navigator.userAgent.indexOf('Nexus9') == -1)) {
+				client = "mobile";
+				document.write('<link rel="stylesheet" type="text/css" href="css/mobile.css">');
+			} else {
+				client = "PC";
+				document.write('<link rel="stylesheet" type="text/css" href="css/pc.css">');
+			}
+
+			$(document).ready(function() {
+				setSize();
+			});
+			$(window).resize(function() {
+				setSize();
+			});
+
+			function setSize() {
+				var width = $(window).width();
+
+				/* padding分マイナス */
+				var height = $(window).height() / 2;
+
+				if (client == "PC") {
+					setPCSize(width, height);
+				} else {
+					setMobileSize(width, height);
+				}
+			}
+
+			function setPCSize(width, height) {
+				$("#map_now").css("width", "100%");
+				$("#map_now").css("height", height + "px");
+
+				$("#print_map").css("width", "100%");
+				$("#print_map").css("height", height + "px");
+			};
+
+			function setMobileSize(width, height) {
+				// heightもパーセント指定したい
+				$("#map_now").css("width", "100%");
+				$("#map_now").css("height", height + "px");
+
+				$("#print_map").css("width", "100%");
+				$("#print_map").css("height", height + "px");
+			}
+
+		</script>
+	</body>
+</html>

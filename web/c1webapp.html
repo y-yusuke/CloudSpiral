@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>c1webapp</title>
+		<link rel="stylesheet" href="css/bootstrap-responsive.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<!-- <link rel="stylesheet" href="css/default.css"> -->
+	</head>
+
+	<!--	<body style="padding-top:60px;"> -->
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-header">
+				<a class="navbar-text"> <FONT size="4" color="#ffffff">C1WebApp</FONT> </a>
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-content">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div id="nav-content" class="collapse navbar-collapse">
+				<form class="navbar-form">
+					<div class="form-group">
+						<input id='address_from'  type='text'  value="現在地" class="form-control" placeholder="Origin">
+						<input id='address_to'  type='text'  value="" class="form-control" placeholder="Destination">
+					</div>
+					<div class="form-group">
+						<input id="route_post" type="button" class="btn btn-info" value="Search">
+						<input type="button" class="btn btn-warning" onclick="location.reload()" value=" Home ">
+						<input type="button" class="btn btn-success" onclick="window.open('c1printwebapp.html')" value=" Print ">
+					</div>
+					<div class="radio">
+						<input id="transport" type="button" class="btn btn-primary" value="Transport">
+						<label>
+							<input type="radio" name="radio2" id="drive" value="radio1" checked="">
+							<FONT size="3" color="#ffffff">Drive</FONT></label>
+						<label>
+							<input type="radio" name="radio2" id="walk" value="radio2">
+							<FONT size="3" color="#ffffff">Walk</FONT></label>
+					</div>
+					<div class="radio">
+						<input id="move" type="button" class="btn btn-danger" value=" Move ">
+						<label>
+							<input type="radio" name="radio" id="move_on" value="radio3">
+							<FONT size="3" color="#ffffff">ON</FONT></label>
+						<label>
+							<input type="radio" name="radio" id="move_off" value="radio4"  checked="">
+							<FONT size="3" color="#ffffff">OFF</FONT></label>
+					</div>
+				</form>
+			</div>
+		</nav>
+
+		<div id="map_now" class='map_box'></div>
+		<div id="street_view_parent" class='sv_box' style="overflow:auto;"></div>
+
+		<script src="https://maps.google.com/maps/api/js?v=3&sensor=false"></script>
+		<script src="js/jquery-2.1.4.js"></script>
+		<script src="js/c1webapp.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script src="js/currentlocation.js"></script>
+		<script type="text/javascript">
+			var agent = navigator.userAgent;
+			var client;
+
+			// iPhone と Android は別cssで
+			if ((agent.search("iPhone") != -1 && navigator.userAgent.indexOf('iPad') == -1) || (agent.search("Android") != -1 && navigator.userAgent.indexOf('Nexus7') == -1 && navigator.userAgent.indexOf('Nexus9') == -1)) {
+				client = "mobile";
+				document.write('<link rel="stylesheet" type="text/css" href="css/mobile.css">');
+			} else {
+				client = "PC";
+				document.write('<link rel="stylesheet" type="text/css" href="css/pc.css">');
+			}
+
+			$(document).ready(function() {
+				setSize();
+			});
+			$(window).resize(function() {
+				setSize();
+			});
+
+			function setSize() {
+				var width = $(window).width();
+
+				/* padding分マイナス */
+				var height = $(window).height() - 60;
+
+				if (client == "PC") {
+					setPCSize(width, height);
+				} else {
+					setMobileSize(width, height);
+				}
+			}
+
+			function setPCSize(width, height) {
+				$("#map_now").css("width", "50%");
+				$("#map_now").css("height", height + "px");
+
+				$("#street_view_parent").css("width", "49%");
+				$("#street_view_parent").css("height", height + "px");
+			};
+
+			function setMobileSize(width, height) {
+				// heightもパーセント指定したい
+				$("#map_now").css("width", "100%");
+				$("#map_now").css("height", height + "px");
+
+				$("#street_view_parent").css("width", "100%");
+				$("#street_view_parent").css("height", height + "px");
+			}
+
+		</script>
+	</body>
+</html>
